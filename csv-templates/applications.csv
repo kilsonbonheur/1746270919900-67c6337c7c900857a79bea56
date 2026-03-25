@@ -1,0 +1,4 @@
+first_name,last_name,email,phone,nationality,date_of_birth,passport_number,passport_expiry,visa_type,entry_date,travel_purpose,previous_visit,accommodation,additional_info,currency,payment_status,status
+John,Doe,john.doe@example.com,+971501234567,Indian,1990-05-15,A12345678,2028-05-15,30-day Tourist Visa,2025-02-01,Tourism,,Hotel Dubai Marina,,USD,paid,pending
+Jane,Smith,jane.smith@example.com,+447911123456,British,1985-11-22,B98765432,2027-11-22,90-day Tourist Visa,2025-03-10,Business,Yes,Hilton Downtown,Arriving with family,AED,paid,pending
+Ahmed,Hassan,ahmed.h@example.com,+201001234567,Egyptian,1992-03-08,C55667788,2029-03-08,14-day Tourist Visa,2025-04-20,Tourism,No,Airbnb Apartment,,USD,paid,pending
