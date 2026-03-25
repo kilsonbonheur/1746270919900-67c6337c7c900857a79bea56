@@ -107,12 +107,10 @@ function ApplicationForm() {
 
       if (error) throw error;
 
-      // Send email notification
+      // Send email notifications (non-blocking)
       try {
-        await fetch(`${SUPABASE_URL}/functions/v1/send-notification`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
+        await supabase.functions.invoke('send-notification', {
+          body: {
             type: 'application_submitted',
             data: {
               first_name: formData.firstName,
@@ -122,7 +120,7 @@ function ApplicationForm() {
               amount: getPrice(formData.visaType, currency),
               currency,
             },
-          }),
+          },
         });
       } catch (emailErr) {
         console.error('Email notification failed:', emailErr);
