@@ -40,6 +40,9 @@ function Navbar() {
             <NavLink to="/contact" className={navLinkClasses}>
               Contact Us
             </NavLink>
+            <NavLink to="/track" className={navLinkClasses}>
+              Track Application
+            </NavLink>
             <Link to="/apply" className="ml-4 btn-primary">
               Apply Now
             </Link>
@@ -93,6 +96,13 @@ function Navbar() {
               onClick={() => setIsMenuOpen(false)}
             >
               Contact Us
+            </NavLink>
+            <NavLink
+              to="/track"
+              className={navLinkClasses}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Track Application
             </NavLink>
             <div className="pt-2">
               <Link
