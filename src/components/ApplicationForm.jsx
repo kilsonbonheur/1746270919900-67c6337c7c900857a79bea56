@@ -1,7 +1,6 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { Check, ChevronRight, Upload, CreditCard } from "lucide-react";
 import toast from "react-hot-toast";
 import CurrencySelector from "./CurrencySelector";
@@ -186,8 +185,6 @@ function ApplicationForm() {
         toast.success("Payment processed successfully!");
       }, 2000);
     }
-  };
-000);
   };
 
   return (
@@ -685,9 +682,9 @@ function ApplicationForm() {
               <OrderSummary
                 visaType={formData.visaType}
                 currency={currency}
-                onProceedToPayment={handleProceedToPay                customerEmail={formData.email}
+                onProceedToPayment={handleProceedToPayment}
+                customerEmail={formData.email}
                 customerName={`${formData.firstName || ''} ${formData.lastName || ''}`}
-ment}
                 isLoading={isProcessing}
               />
             ) : (
