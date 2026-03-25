@@ -1,6 +1,33 @@
-import { createClient } from '@supabase/supabase-js';
+// Supabase integration is currently disabled.
+// To re-enable, connect a Supabase project and uncomment the lines below.
 
-const supabaseUrl = 'https://bpbeucgxxxjwcydujcue.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJwYmV1Y2d4eHhqd2N5ZHVqY3VlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzNjg3MjcsImV4cCI6MjA4OTk0NDcyN30.zZvIKvYwdF66bEbzQtSLl7J_sXIBz6ecjDQagsYRiMw';
+// import { createClient } from '@supabase/supabase-js';
+// const supabaseUrl = 'YOUR_SUPABASE_URL';
+// const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
+// export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Mock supabase client that logs actions to console instead of calling Supabase
+export const supabase = {
+  from: (table) => ({
+    insert: async (data) => {
+      console.log(`[Supabase Disabled] Would insert into "${table}":`, data);
+      return { data, error: null };
+    },
+    select: async () => {
+      console.log(`[Supabase Disabled] Would select from "${table}"`);
+      return { data: [], error: null };
+    },
+  }),
+  storage: {
+    from: (bucket) => ({
+      upload: async (path, file) => {
+        console.log(`[Supabase Disabled] Would upload to "${bucket}/${path}"`);
+        return { data: { path }, error: null };
+      },
+      getPublicUrl: (path) => {
+        console.log(`[Supabase Disabled] Would get public URL for "${bucket}/${path}"`);
+        return { data: { publicUrl: `https://placeholder.local/${bucket}/${path}` } };
+      },
+    }),
+  },
+};
