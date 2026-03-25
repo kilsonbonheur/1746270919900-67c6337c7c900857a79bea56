@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply font-sans text-gray-800 bg-gray-50;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-primary {
+    @apply btn bg-primary-600 hover:bg-primary-700 text-white focus:ring-primary-500;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 focus:ring-primary-500;
+  }
+  
+  .btn-gold {
+    @apply btn bg-gold-500 hover:bg-gold-600 text-white focus:ring-gold-400;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all duration-200;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-soft p-6;
+  }
+  
+  .section {
+    @apply py-16 md:py-24;
+  }
+  
+  .heading-1 {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+  }
+  
+  .heading-2 {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold;
+  }
+  
+  .heading-3 {
+    @apply text-xl md:text-2xl font-bold;
+  }
+}
