@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import CurrencySelector from "./CurrencySelector";
 import OrderSummary from "./OrderSummary";
 import { getPrice, formatPrice } from "../utils/pricing";
+import { supabase } from "../lib/supabase";
 
 function ApplicationForm() {
   const {
@@ -18,6 +19,9 @@ function ApplicationForm() {
   const [currency, setCurrency] = useState("USD");
   const [paymentComplete, setPaymentComplete] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState({});
+  const [fileNames, setFileNames] = useState({});
 
   const visaType = watch("visaType");
 
@@ -28,22 +32,87 @@ function ApplicationForm() {
     "Documents",
   ];
 
-  const onSubmit = (data) => {
+  const handleFileSelect = (fieldName) => (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setUploadedFiles((prev) => ({ ...prev, [fieldName]: file }));
+      setFileNames((prev) => ({ ...prev, [fieldName]: file.name }));
+    }
+  };
+
+  const uploadFile = async (file, folder) => {
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${folder}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+    const { data, error } = await supabase.storage
+      .from("documents")
+      .upload(fileName, file);
+    if (error) throw error;
+    const { data: urlData } = supabase.storage
+      .from("documents")
+      .getPublicUrl(fileName);
+    return urlData.publicUrl;
+  };
+
+  const onSubmit = async (data) => {
     if (step < 4) {
       setFormData({ ...formData, ...data });
       setStep(step + 1);
       window.scrollTo(0, 0);
-    } else {
-      const finalData = {
-        ...formData,
-        ...data,
-        currency,
-        paymentStatus: "paid",
-      };
-      console.log("Final Application Data:", finalData);
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      let passportCopyUrl = null;
+      let photographUrl = null;
+      let flightItineraryUrl = null;
+
+      if (uploadedFiles.passportCopy) {
+        passportCopyUrl = await uploadFile(uploadedFiles.passportCopy, "passports");
+      }
+      if (uploadedFiles.photograph) {
+        photographUrl = await uploadFile(uploadedFiles.photograph, "photographs");
+      }
+      if (uploadedFiles.flightItinerary) {
+        flightItineraryUrl = await uploadFile(uploadedFiles.flightItinerary, "flights");
+      }
+
+      const { error } = await supabase.from("applications").insert([
+        {
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          nationality: formData.nationality,
+          date_of_birth: formData.dateOfBirth,
+          passport_number: formData.passportNumber,
+          passport_expiry: formData.passportExpiry,
+          visa_type: formData.visaType,
+          entry_date: formData.entryDate,
+          travel_purpose: formData.travelPurpose,
+          previous_visit: formData.previousVisit || null,
+          accommodation: formData.accommodation,
+          additional_info: formData.additionalInfo || null,
+          currency,
+          amount: getPrice(formData.visaType, currency),
+          payment_status: "paid",
+          status: "pending",
+          passport_copy_url: passportCopyUrl,
+          photograph_url: photographUrl,
+          flight_itinerary_url: flightItineraryUrl,
+        },
+      ]);
+
+      if (error) throw error;
+
       toast.success(
         "Application submitted successfully! We will contact you via email and WhatsApp with updates."
       );
+    } catch (err) {
+      console.error("Error submitting application:", err);
+      toast.error("Failed to submit application. Please try again or contact us via WhatsApp.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -607,9 +676,8 @@ function ApplicationForm() {
                     id="passportCopy"
                     type="file"
                     className="hidden"
-                    {...register("passportCopy", {
-                      required: "Passport copy is required",
-                    })}
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    onChange={handleFileSelect("passportCopy")}
                   />
                   <button
                     type="button"
@@ -620,12 +688,10 @@ function ApplicationForm() {
                   >
                     Select File
                   </button>
+                  {fileNames.passportCopy && (
+                    <p className="mt-2 text-sm text-green-600">Selected: {fileNames.passportCopy}</p>
+                  )}
                 </div>
-                {errors.passportCopy && (
-                  <p className="mt-1 text-lg text-red-600">
-                    {errors.passportCopy.message}
-                  </p>
-                )}
               </div>
 
               <div>
@@ -647,9 +713,8 @@ function ApplicationForm() {
                     id="photograph"
                     type="file"
                     className="hidden"
-                    {...register("photograph", {
-                      required: "Photograph is required",
-                    })}
+                    accept=".jpg,.jpeg,.png"
+                    onChange={handleFileSelect("photograph")}
                   />
                   <button
                     type="button"
@@ -660,12 +725,10 @@ function ApplicationForm() {
                   >
                     Select File
                   </button>
+                  {fileNames.photograph && (
+                    <p className="mt-2 text-sm text-green-600">Selected: {fileNames.photograph}</p>
+                  )}
                 </div>
-                {errors.photograph && (
-                  <p className="mt-1 text-lg text-red-600">
-                    {errors.photograph.message}
-                  </p>
-                )}
               </div>
 
               <div>
@@ -687,7 +750,8 @@ function ApplicationForm() {
                     id="flightItinerary"
                     type="file"
                     className="hidden"
-                    {...register("flightItinerary")}
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    onChange={handleFileSelect("flightItinerary")}
                   />
                   <button
                     type="button"
@@ -698,6 +762,9 @@ function ApplicationForm() {
                   >
                     Select File
                   </button>
+                  {fileNames.flightItinerary && (
+                    <p className="mt-2 text-sm text-green-600">Selected: {fileNames.flightItinerary}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -770,7 +837,7 @@ function ApplicationForm() {
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </>
               ) : (
-                "Submit Application"
+                isSubmitting ? "Submitting..." : "Submit Application"
               )}
             </button>
           )}

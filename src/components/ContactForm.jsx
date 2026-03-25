@@ -1,9 +1,12 @@
 import React from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Send } from "lucide-react";
 import toast from "react-hot-toast";
+import { supabase } from "../lib/supabase";
 
 function ContactForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     handleSubmit,
@@ -11,12 +14,32 @@ function ContactForm() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    toast.success(
-      "Thank you for your message! We will get back to you soon via email or WhatsApp."
-    );
-    reset();
+  const onSubmit = async (data) => {
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase.from("contact_messages").insert([
+        {
+          name: data.name,
+          email: data.email,
+          phone: data.phone || null,
+          subject: data.subject,
+          message: data.message,
+          status: "unread",
+        },
+      ]);
+
+      if (error) throw error;
+
+      toast.success(
+        "Thank you for your message! We will get back to you soon via email or WhatsApp."
+      );
+      reset();
+    } catch (err) {
+      console.error("Error submitting contact form:", err);
+      toast.error("Something went wrong. Please try again or contact us via WhatsApp.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -148,7 +171,7 @@ function ContactForm() {
 
         <button type="submit" className="btn-primary w-full">
           <Send className="h-5 w-5 mr-2" />
-          Send Message
+          {isSubmitting ? "Sending..." : "Send Message"}
         </button>
       </form>
     </div>
