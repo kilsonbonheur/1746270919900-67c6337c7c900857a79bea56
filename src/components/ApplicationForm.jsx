@@ -8,6 +8,8 @@ import { getPrice, formatPrice } from "../utils/pricing";
 import { supabase } from "../lib/supabase";
 
 function ApplicationForm() {
+  const SUPABASE_URL = 'https://bpbeucgxxxjwcydujcue.supabase.co';
+
   const {
     register,
     handleSubmit,
@@ -105,8 +107,29 @@ function ApplicationForm() {
 
       if (error) throw error;
 
+      // Send email notification
+      try {
+        await fetch(`${SUPABASE_URL}/functions/v1/send-notification`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'application_submitted',
+            data: {
+              first_name: formData.firstName,
+              last_name: formData.lastName,
+              email: formData.email,
+              visa_type: formData.visaType,
+              amount: getPrice(formData.visaType, currency),
+              currency,
+            },
+          }),
+        });
+      } catch (emailErr) {
+        console.error('Email notification failed:', emailErr);
+      }
+
       toast.success(
-        "Application submitted successfully! We will contact you via email and WhatsApp with updates."
+        "Application submitted successfully! Check your email for confirmation."
       );
     } catch (err) {
       console.error("Error submitting application:", err);

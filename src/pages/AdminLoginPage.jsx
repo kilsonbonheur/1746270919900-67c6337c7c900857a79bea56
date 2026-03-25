@@ -20,56 +20,54 @@ function AdminLoginPage() {
       toast.success('Welcome back!');
       navigate('/admin');
     } catch (err) {
-      toast.error(err.message || 'Invalid email or password');
+      toast.error(err.message || 'Invalid credentials');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-600 rounded-full mb-4">
+          <div className="w-16 h-16 bg-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Lock className="h-8 w-8 text-white" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Admin Login</h1>
-          <p className="text-gray-600 mt-2">Kilson Visa Services Dashboard</p>
+          <p className="text-gray-500 mt-2">Kilson Visa Services Dashboard</p>
         </div>
 
-        <div className="card">
-          <form onSubmit={handleSubmit}>
-            <div className="mb-6">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+        <div className="bg-white rounded-xl shadow-soft p-8">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Email Address
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
-                  id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="input-field pl-10"
-                  placeholder="admin@kilsonservices.com"
+                  placeholder="admin@example.com"
                   required
                 />
               </div>
             </div>
 
-            <div className="mb-6">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Password
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
-                  id="password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="input-field pl-10 pr-10"
-                  placeholder="Enter your password"
+                  placeholder="••••••••"
                   required
                 />
                 <button
@@ -85,12 +83,16 @@ function AdminLoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full btn-primary text-center"
+              className="btn-primary w-full"
             >
               {isLoading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
         </div>
+
+        <p className="text-center text-sm text-gray-400 mt-6">
+          &copy; {new Date().getFullYear()} Kilson Visa Services
+        </p>
       </div>
     </div>
   );
