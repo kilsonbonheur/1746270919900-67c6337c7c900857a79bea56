@@ -8,6 +8,7 @@ import RequirementsPage from './pages/RequirementsPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
 import TrackApplicationPage from './pages/TrackApplicationPage';
+import TermsPage from './pages/TermsPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -24,6 +25,7 @@ function App() {
           <Route path="requirements" element={<RequirementsPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="track" element={<TrackApplicationPage />} />
+          <Route path="terms" element={<TermsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route path="/admin/login" element={<AdminLoginPage />} />

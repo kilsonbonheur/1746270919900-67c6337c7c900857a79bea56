@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, FileText, MessageSquare, LogOut, Clock,
   CheckCircle, XCircle, AlertCircle, Eye, ChevronDown, ChevronUp,
-  Send, ExternalLink, RefreshCw, Filter, Search
+  Send, ExternalLink, RefreshCw, Filter, Search, Download
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
@@ -113,6 +113,43 @@ function AdminDashboardPage() {
     setMessages((prev) => prev.filter((m) => m.id !== msgId));
     toast.success('Message deleted');
   };
+
+  const exportApplicationsCSV = () => {
+    const headers = ['Name','Email','Phone','Nationality','Passport','Visa Type','Entry Date','Purpose','Amount','Currency','Payment','Status','Submitted'];
+    const rows = filteredApps.map(a => [
+      `${a.first_name} ${a.last_name}`, a.email, a.phone, a.nationality,
+      a.passport_number, a.visa_type, a.entry_date, a.travel_purpose,
+      a.amount, a.currency, a.payment_status, a.status,
+      new Date(a.created_at).toLocaleDateString()
+    ]);
+    const csv = [headers, ...rows].map(r => r.map(v => `"${(v || '').toString().replace(/"/g, '""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `applications-${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.success('Applications exported!');
+  };
+
+  const exportMessagesCSV = () => {
+    const headers = ['Name','Email','Phone','Subject','Message','Status','Received'];
+    const rows = messages.map(m => [
+      m.name, m.email, m.phone || '', m.subject, m.message, m.status,
+      new Date(m.created_at).toLocaleDateString()
+    ]);
+    const csv = [headers, ...rows].map(r => r.map(v => `"${(v || '').toString().replace(/"/g, '""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `messages-${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.success('Messages exported!');
+  };
+
 
   const filteredApps = applications.filter((app) => {
     const matchesStatus = statusFilter === 'all' || app.status === statusFilter;
@@ -241,6 +278,9 @@ function AdminDashboardPage() {
             </div>
             <button onClick={fetchData} className="btn-secondary py-2 px-4 text-sm">
               <RefreshCw className="h-4 w-4 mr-1" /> Refresh
+            </button>
+            <button onClick={exportApplicationsCSV} className="btn-secondary py-2 px-4 text-sm bg-green-50 hover:bg-green-100 text-green-700 border-green-200">
+              <Download className="h-4 w-4 mr-1" /> Export CSV
             </button>
           </div>
         )}
@@ -384,7 +424,13 @@ function AdminDashboardPage() {
 
         {/* Messages Tab */}
         {activeTab === 'messages' && (
-          <div className="space-y-4">
+          <>
+            <div className="flex justify-end mb-4">
+              <button onClick={exportMessagesCSV} className="btn-secondary py-2 px-4 text-sm bg-green-50 hover:bg-green-100 text-green-700 border-green-200">
+                <Download className="h-4 w-4 mr-1" /> Export CSV
+              </button>
+            </div>
+            <div className="space-y-4">
             {messages.length === 0 ? (
               <div className="bg-white rounded-xl p-12 text-center shadow-soft">
                 <MessageSquare className="h-12 w-12 text-gray-300 mx-auto mb-4" />
@@ -460,7 +506,8 @@ function AdminDashboardPage() {
                 );
               })
             )}
-          </div>
+            </div>
+          </>
         )}
       </div>
     </div>

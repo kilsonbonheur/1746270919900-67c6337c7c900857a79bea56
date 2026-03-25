@@ -150,24 +150,24 @@ function Footer() {
               reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a
-                href="#"
+              <Link
+                to="/terms"
                 className="text-lg font-extralight text-gray-400 hover:text-white transition-colors"
               >
                 Privacy Policy
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/terms"
                 className="text-lg font-extralight text-gray-400 hover:text-white transition-colors"
               >
                 Terms of Service
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/terms"
                 className="text-lg font-extralight text-gray-400 hover:text-white transition-colors"
               >
                 Refund Policy
-              </a>
+              </Link>
             </div>
           </div>
         </div>

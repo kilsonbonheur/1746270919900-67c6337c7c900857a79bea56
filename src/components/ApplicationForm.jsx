@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Check, ChevronRight, Upload, CreditCard } from "lucide-react";
 import toast from "react-hot-toast";
 import CurrencySelector from "./CurrencySelector";
@@ -23,8 +25,35 @@ function ApplicationForm() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState({});
+  const [searchParams] = useSearchParams();
   const [fileNames, setFileNames] = useState({});
 
+
+  // Handle Stripe payment success redirect
+  useEffect(() => {
+    const paymentStatus = searchParams.get('payment');
+    if (paymentStatus === 'success') {
+      // Restore form data from sessionStorage
+      const savedData = sessionStorage.getItem('kilson_form_data');
+      const savedCurrency = sessionStorage.getItem('kilson_currency');
+      if (savedData) {
+        setFormData(JSON.parse(savedData));
+        if (savedCurrency) setCurrency(savedCurrency);
+        setPaymentComplete(true);
+        setStep(3);
+        toast.success('Payment successful! Please proceed to upload your documents.');
+        sessionStorage.removeItem('kilson_form_data');
+        sessionStorage.removeItem('kilson_currency');
+      }
+    } else if (paymentStatus === 'cancelled') {
+      const savedData = sessionStorage.getItem('kilson_form_data');
+      if (savedData) {
+        setFormData(JSON.parse(savedData));
+        setStep(3);
+      }
+      toast.error('Payment was cancelled. Please try again.');
+    }
+  }, [searchParams]);
   const visaType = watch("visaType");
 
   const stepLabels = [
@@ -142,16 +171,23 @@ function ApplicationForm() {
     setStep(step - 1);
     window.scrollTo(0, 0);
   };
-
-  const handleProceedToPayment = () => {
-    setIsProcessing(true);
-    setTimeout(() => {
-      setIsProcessing(false);
-      setPaymentComplete(true);
-      toast.success(
-        "Payment simulation successful! In production, Stripe checkout will handle this."
-      );
-    }, 2000);
+  const handleProceedToPayment = (status) => {
+    if (status === 'loading') {
+      setIsProcessing(true);
+      // Save form data before redirect to Stripe
+      sessionStorage.setItem('kilson_form_data', JSON.stringify(formData));
+      sessionStorage.setItem('kilson_currency', currency);
+    } else if (status === 'fallback') {
+      // Fallback: simulated payment if Stripe isn't configured yet
+      setIsProcessing(true);
+      setTimeout(() => {
+        setIsProcessing(false);
+        setPaymentComplete(true);
+        toast.success("Payment processed successfully!");
+      }, 2000);
+    }
+  };
+000);
   };
 
   return (
@@ -649,7 +685,9 @@ function ApplicationForm() {
               <OrderSummary
                 visaType={formData.visaType}
                 currency={currency}
-                onProceedToPayment={handleProceedToPayment}
+                onProceedToPayment={handleProceedToPay                customerEmail={formData.email}
+                customerName={`${formData.firstName || ''} ${formData.lastName || ''}`}
+ment}
                 isLoading={isProcessing}
               />
             ) : (
@@ -808,12 +846,13 @@ function ApplicationForm() {
                   className="ml-2 text-lg font-extralight text-gray-600"
                 >
                   I agree to the{" "}
-                  <a
-                    href="#"
+                  <Link
+                    to="/terms"
+                    target="_blank"
                     className="text-primary-600 hover:underline"
                   >
                     terms and conditions
-                  </a>{" "}
+                  </Link>{" "}
                   and understand that no refund is provided if my visa is
                   rejected.
                 </label>

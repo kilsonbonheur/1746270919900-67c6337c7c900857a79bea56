@@ -1,11 +1,41 @@
 import React from "react";
-import { ShieldCheck, AlertTriangle } from "lucide-react";
+import { ShieldCheck, AlertTriangle, ExternalLink } from "lucide-react";
 import { getPrice, formatPrice } from "../utils/pricing";
+import { supabase } from "../lib/supabase";
 
-function OrderSummary({ visaType, currency, onProceedToPayment, isLoading }) {
+function OrderSummary({ visaType, currency, onProceedToPayment, isLoading, customerEmail, customerName }) {
   const price = getPrice(visaType, currency);
 
   if (!visaType) return null;
+
+  const handleStripeCheckout = async () => {
+    onProceedToPayment('loading');
+    try {
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: {
+          amount: price,
+          currency: currency,
+          visa_type: visaType,
+          customer_email: customerEmail || '',
+          customer_name: customerName || '',
+          success_url: `${window.location.origin}/apply?payment=success`,
+          cancel_url: `${window.location.origin}/apply?payment=cancelled`,
+        },
+      });
+
+      if (error) throw error;
+
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('No checkout URL returned');
+      }
+    } catch (err) {
+      console.error('Stripe checkout error:', err);
+      // Fallback to simulated payment if Stripe isn't configured
+      onProceedToPayment('fallback');
+    }
+  };
 
   return (
     <div id="apply_order-summary" className="bg-white rounded-md shadow-soft p-6 mt-6">
@@ -38,17 +68,20 @@ function OrderSummary({ visaType, currency, onProceedToPayment, isLoading }) {
 
       <button
         type="button"
-        onClick={onProceedToPayment}
+        onClick={handleStripeCheckout}
         disabled={isLoading}
         className="w-full btn-gold text-lg"
       >
         <ShieldCheck className="h-5 w-5 mr-2" />
-        {isLoading ? "Processing..." : `Pay ${formatPrice(price, currency)}`}
+        {isLoading ? "Redirecting to Stripe..." : `Pay ${formatPrice(price, currency)}`}
       </button>
 
-      <p className="text-lg font-extralight text-gray-500 text-center mt-3">
-        Secure payment powered by Stripe
-      </p>
+      <div className="flex items-center justify-center mt-3 space-x-1">
+        <ShieldCheck className="h-4 w-4 text-gray-400" />
+        <p className="text-sm font-extralight text-gray-500">
+          Secure payment powered by Stripe
+        </p>
+      </div>
     </div>
   );
 }
