@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
-import LanguageSwitcher from './LanguageSwitcher';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
 
@@ -47,7 +46,6 @@ function Navbar() {
             <NavLink to="/track" className={navLinkClasses}>
               {t(language, "nav.trackApplication")}
             </NavLink>
-            <LanguageSwitcher />
             <Link to="/apply" className="ml-2 btn-primary">
               {t(language, "nav.applyNow")}
             </Link>
@@ -88,9 +86,8 @@ function Navbar() {
             <NavLink to="/track" className={navLinkClasses} onClick={() => setIsMenuOpen(false)}>
               {t(language, "nav.trackApplication")}
             </NavLink>
-            <div className="pt-2 flex items-center gap-3">
-              <LanguageSwitcher />
-              <Link to="/apply" className="flex-1 btn-primary text-center" onClick={() => setIsMenuOpen(false)}>
+            <div className="pt-2">
+              <Link to="/apply" className="btn-primary text-center block" onClick={() => setIsMenuOpen(false)}>
                 {t(language, "nav.applyNow")}
               </Link>
             </div>
