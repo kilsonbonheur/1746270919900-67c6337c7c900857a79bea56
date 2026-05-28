@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { language } = useLanguage();
+  const { language, toggleLanguage } = useLanguage();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -49,6 +50,14 @@ function Navbar() {
             <Link to="/apply" className="ml-2 btn-primary">
               {t(language, "nav.applyNow")}
             </Link>
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1.5 ml-2 px-3 py-1.5 rounded-md text-lg font-medium transition-colors text-gray-700 hover:text-primary-600 hover:bg-gray-50 border border-gray-200"
+              aria-label={language === "en" ? "Switch to French" : "Passer en anglais"}
+            >
+              <Globe className="h-4 w-4" />
+              <span>{language === "en" ? "FR" : "EN"}</span>
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -90,6 +99,14 @@ function Navbar() {
               <Link to="/apply" className="btn-primary text-center block" onClick={() => setIsMenuOpen(false)}>
                 {t(language, "nav.applyNow")}
               </Link>
+              <button
+                onClick={() => { toggleLanguage(); setIsMenuOpen(false); }}
+                className="flex items-center justify-center gap-1.5 mt-2 w-full px-3 py-2 rounded-md text-lg font-medium transition-colors text-gray-700 hover:text-primary-600 hover:bg-gray-50 border border-gray-200"
+                aria-label={language === "en" ? "Switch to French" : "Passer en anglais"}
+              >
+                <Globe className="h-4 w-4" />
+                <span>{language === "en" ? "FR" : "EN"}</span>
+              </button>
             </div>
           </div>
         </div>
