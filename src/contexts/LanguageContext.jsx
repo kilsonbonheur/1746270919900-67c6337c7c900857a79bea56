@@ -1,9 +1,10 @@
 import React, { createContext, useContext } from "react";
 
-const LanguageContext = createContext();
+const LanguageContext = createContext({ language: "en" });
 
 export function useLanguage() {
-  return useContext(LanguageContext);
+  const context = useContext(LanguageContext);
+  return context || { language: "en" };
 }
 
 export function LanguageProvider({ children }) {
