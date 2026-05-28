@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
 import { Menu, X, Globe } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
