@@ -21,7 +21,7 @@ function ContactPage() {
     {
       icon: <Mail className="h-6 w-6 text-primary-600" />,
       title: "Email",
-      details: ["info@kilsonservices.com"],
+      details: ["info@visainuae.com"],
     },
     {
       icon: <MapPin className="h-6 w-6 text-primary-600" />,

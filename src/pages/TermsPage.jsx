@@ -155,10 +155,10 @@ function TermsPage() {
                 If you have any questions about these terms and conditions,
                 please contact us at{" "}
                 <a
-                  href="mailto:info@kilsonservices.com"
+                  href="mailto:info@visainuae.com"
                   className="text-primary-600 hover:underline font-medium"
                 >
-                  info@kilsonservices.com
+                  info@visainuae.com
                 </a>{" "}
                 or via WhatsApp at{" "}
                 <a

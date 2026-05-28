@@ -113,7 +113,7 @@ function Footer() {
               <li className="flex items-start">
                 <Mail className="h-5 w-5 text-primary-400 mr-3 flex-shrink-0 mt-0.5" />
                 <span className="text-lg font-extralight text-gray-300">
-                  info@kilsonservices.com
+                  info@visainuae.com
                 </span>
               </li>
               <li className="flex items-start">

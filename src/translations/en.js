@@ -11,7 +11,7 @@ const en = {
 
   // Hero
   hero: {
-    title: "Fast & Reliable Dubai Visit Visa Services",
+    title: "Fast & Reliable UAE Visit Visa Services \u2013 Dubai & All Emirates",
     subtitle: "Kilson Services offers hassle-free Dubai visit visa processing for 30 and 60 days. Get your visa approved quickly with our expert assistance.",
     feature1: "Quick processing within 24-72 hours",
     feature2: "Competitive rates with no hidden fees",
