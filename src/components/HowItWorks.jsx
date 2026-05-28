@@ -1,38 +1,38 @@
 import React from "react";
 import { FileText, CreditCard, CheckCircle, Clock } from "lucide-react";
+import { useLanguage } from "../contexts/LanguageContext";
+import { t } from "../translations";
 
 function HowItWorks() {
+  const { language } = useLanguage();
+
   const steps = [
     {
       id: 1,
       icon: <FileText className="h-10 w-10 text-white" />,
-      title: "Complete Application",
-      description:
-        "Fill out our simple online application form with your personal details and travel information.",
+      title: t(language, "howItWorks.step1Title"),
+      description: t(language, "howItWorks.step1Desc"),
       color: "bg-primary-600",
     },
     {
       id: 2,
       icon: <CreditCard className="h-10 w-10 text-white" />,
-      title: "Pay First",
-      description:
-        "Select USD or AED and pay securely via Stripe before we begin processing your visa.",
+      title: t(language, "howItWorks.step2Title"),
+      description: t(language, "howItWorks.step2Desc"),
       color: "bg-secondary-600",
     },
     {
       id: 3,
       icon: <Clock className="h-10 w-10 text-white" />,
-      title: "Processing",
-      description:
-        "Our team processes your application and submits it to the immigration authorities. Track via email and WhatsApp.",
+      title: t(language, "howItWorks.step3Title"),
+      description: t(language, "howItWorks.step3Desc"),
       color: "bg-gold-500",
     },
     {
       id: 4,
       icon: <CheckCircle className="h-10 w-10 text-white" />,
-      title: "Receive Visa",
-      description:
-        "Get your approved visa delivered to your email within 24-72 hours.",
+      title: t(language, "howItWorks.step4Title"),
+      description: t(language, "howItWorks.step4Desc"),
       color: "bg-green-600",
     },
   ];
@@ -41,10 +41,9 @@ function HowItWorks() {
     <section id="home_how-it-works" className="section bg-white">
       <div className="container-custom">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="heading-2 text-gray-900 mb-4">How It Works</h2>
+          <h2 className="heading-2 text-gray-900 mb-4">{t(language, "howItWorks.title")}</h2>
           <p className="text-lg font-extralight text-gray-600">
-            Getting your Dubai visit visa is simple and straightforward with our
-            easy 4-step process.
+            {t(language, "howItWorks.subtitle")}
           </p>
         </div>
 

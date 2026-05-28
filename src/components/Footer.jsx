@@ -9,8 +9,12 @@ import {
   Twitter,
   MessageCircle,
 } from "lucide-react";
+import { useLanguage } from "../contexts/LanguageContext";
+import { t } from "../translations";
 
 function Footer() {
+  const { language } = useLanguage();
+
   const whatsappUrl =
     "https://wa.me/971557968372?text=Hello%20Kilson%20Services%2C%20I%20need%20help%20with%20my%20Dubai%20visa%20application.";
 
@@ -21,8 +25,7 @@ function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-4">Kilson Visa Services</h3>
             <p className="text-lg font-extralight text-gray-300 mb-4">
-              Your trusted partner for fast and reliable Dubai visit visa
-              processing. We make your travel dreams a reality.
+              {t(language, "footer.companyDesc")}
             </p>
             <div className="flex space-x-3">
               <a
@@ -53,14 +56,14 @@ function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xl font-bold mb-4">Quick Links</h3>
+            <h3 className="text-xl font-bold mb-4">{t(language, "footer.quickLinks")}</h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   to="/"
                   className="text-lg font-extralight text-gray-300 hover:text-white transition-colors"
                 >
-                  Home
+                  {t(language, "nav.home")}
                 </Link>
               </li>
               <li>
@@ -68,7 +71,7 @@ function Footer() {
                   to="/visa-types"
                   className="text-lg font-extralight text-gray-300 hover:text-white transition-colors"
                 >
-                  Visa Types
+                  {t(language, "nav.visaTypes")}
                 </Link>
               </li>
               <li>
@@ -76,7 +79,7 @@ function Footer() {
                   to="/requirements"
                   className="text-lg font-extralight text-gray-300 hover:text-white transition-colors"
                 >
-                  Requirements
+                  {t(language, "nav.requirements")}
                 </Link>
               </li>
               <li>
@@ -84,7 +87,7 @@ function Footer() {
                   to="/apply"
                   className="text-lg font-extralight text-gray-300 hover:text-white transition-colors"
                 >
-                  Apply Now
+                  {t(language, "nav.applyNow")}
                 </Link>
               </li>
               <li>
@@ -92,14 +95,14 @@ function Footer() {
                   to="/contact"
                   className="text-lg font-extralight text-gray-300 hover:text-white transition-colors"
                 >
-                  Contact Us
+                  {t(language, "nav.contactUs")}
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-xl font-bold mb-4">Contact Info</h3>
+            <h3 className="text-xl font-bold mb-4">{t(language, "footer.contactInfo")}</h3>
             <ul className="space-y-3">
               <li className="flex items-start">
                 <Phone className="h-5 w-5 text-primary-400 mr-3 flex-shrink-0 mt-0.5" />
@@ -124,10 +127,9 @@ function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xl font-bold mb-4">WhatsApp Support</h3>
+            <h3 className="text-xl font-bold mb-4">{t(language, "footer.whatsappSupport")}</h3>
             <p className="text-lg font-extralight text-gray-300 mb-4">
-              Need quick help? Chat with us directly on WhatsApp for instant
-              support with your visa application.
+              {t(language, "footer.whatsappText")}
             </p>
             <a
               href={whatsappUrl}
@@ -136,7 +138,7 @@ function Footer() {
               className="inline-flex items-center bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors"
             >
               <MessageCircle className="h-5 w-5 mr-2" />
-              <span className="text-lg font-extralight">Chat Now</span>
+              <span className="text-lg font-extralight">{t(language, "footer.chatNow")}</span>
             </a>
           </div>
         </div>
@@ -146,27 +148,26 @@ function Footer() {
         <div className="container-custom py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-lg font-extralight text-gray-400">
-              {new Date().getFullYear()} Kilson Visa Services. All rights
-              reserved.
+              {new Date().getFullYear()} {t(language, "footer.allRights")}
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link
                 to="/terms"
                 className="text-lg font-extralight text-gray-400 hover:text-white transition-colors"
               >
-                Privacy Policy
+                {t(language, "footer.privacyPolicy")}
               </Link>
               <Link
                 to="/terms"
                 className="text-lg font-extralight text-gray-400 hover:text-white transition-colors"
               >
-                Terms of Service
+                {t(language, "footer.termsOfService")}
               </Link>
               <Link
                 to="/terms"
                 className="text-lg font-extralight text-gray-400 hover:text-white transition-colors"
               >
-                Refund Policy
+                {t(language, "footer.refundPolicy")}
               </Link>
             </div>
           </div>

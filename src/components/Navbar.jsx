@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { language } = useLanguage();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -29,22 +33,23 @@ function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
             <NavLink to="/" end className={navLinkClasses}>
-              Home
+              {t(language, "nav.home")}
             </NavLink>
             <NavLink to="/visa-types" className={navLinkClasses}>
-              Visa Types
+              {t(language, "nav.visaTypes")}
             </NavLink>
             <NavLink to="/requirements" className={navLinkClasses}>
-              Requirements
+              {t(language, "nav.requirements")}
             </NavLink>
             <NavLink to="/contact" className={navLinkClasses}>
-              Contact Us
+              {t(language, "nav.contactUs")}
             </NavLink>
             <NavLink to="/track" className={navLinkClasses}>
-              Track Application
+              {t(language, "nav.trackApplication")}
             </NavLink>
-            <Link to="/apply" className="ml-4 btn-primary">
-              Apply Now
+            <LanguageSwitcher />
+            <Link to="/apply" className="ml-2 btn-primary">
+              {t(language, "nav.applyNow")}
             </Link>
           </div>
 
@@ -68,49 +73,25 @@ function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 py-2">
           <div className="container-custom space-y-1">
-            <NavLink
-              to="/"
-              end
-              className={navLinkClasses}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
+            <NavLink to="/" end className={navLinkClasses} onClick={() => setIsMenuOpen(false)}>
+              {t(language, "nav.home")}
             </NavLink>
-            <NavLink
-              to="/visa-types"
-              className={navLinkClasses}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Visa Types
+            <NavLink to="/visa-types" className={navLinkClasses} onClick={() => setIsMenuOpen(false)}>
+              {t(language, "nav.visaTypes")}
             </NavLink>
-            <NavLink
-              to="/requirements"
-              className={navLinkClasses}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Requirements
+            <NavLink to="/requirements" className={navLinkClasses} onClick={() => setIsMenuOpen(false)}>
+              {t(language, "nav.requirements")}
             </NavLink>
-            <NavLink
-              to="/contact"
-              className={navLinkClasses}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Contact Us
+            <NavLink to="/contact" className={navLinkClasses} onClick={() => setIsMenuOpen(false)}>
+              {t(language, "nav.contactUs")}
             </NavLink>
-            <NavLink
-              to="/track"
-              className={navLinkClasses}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Track Application
+            <NavLink to="/track" className={navLinkClasses} onClick={() => setIsMenuOpen(false)}>
+              {t(language, "nav.trackApplication")}
             </NavLink>
-            <div className="pt-2">
-              <Link
-                to="/apply"
-                className="block w-full btn-primary text-center"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Apply Now
+            <div className="pt-2 flex items-center gap-3">
+              <LanguageSwitcher />
+              <Link to="/apply" className="flex-1 btn-primary text-center" onClick={() => setIsMenuOpen(false)}>
+                {t(language, "nav.applyNow")}
               </Link>
             </div>
           </div>

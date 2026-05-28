@@ -1,7 +1,11 @@
 import React from 'react';
 import { Star } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 function Testimonials() {
+  const { language } = useLanguage();
+
   const testimonials = [
     {
       id: 1,
@@ -47,10 +51,10 @@ function Testimonials() {
       <div className="container-custom">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="heading-2 text-gray-900 mb-4">
-            What Our Clients Say
+            {t(language, "testimonials.title")}
           </h2>
           <p className="text-lg text-gray-600">
-            Don't just take our word for it. Here's what travelers have to say about our visa services.
+            {t(language, "testimonials.subtitle")}
           </p>
         </div>
 

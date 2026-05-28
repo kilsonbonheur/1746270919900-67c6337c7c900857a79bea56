@@ -1,4 +1,5 @@
 import React from 'react';
+import { LanguageProvider } from './contexts/LanguageContext';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
@@ -16,6 +17,7 @@ import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
   return (
+    <LanguageProvider>
     <AuthProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -39,6 +41,7 @@ function App() {
         />
       </Routes>
     </AuthProvider>
+    </LanguageProvider>
   );
 }
 

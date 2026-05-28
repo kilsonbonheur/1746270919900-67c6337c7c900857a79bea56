@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { Clock, Calendar, Users, Check } from "lucide-react";
 import CurrencySelector from "./CurrencySelector";
 import { formatPrice } from "../utils/pricing";
+import { useLanguage } from "../contexts/LanguageContext";
+import { t } from "../translations";
 
 function VisaTypes() {
   const [currency, setCurrency] = useState("USD");
+  const { language } = useLanguage();
 
   const visaOptions = [
     {
@@ -57,11 +60,10 @@ function VisaTypes() {
       <div className="container-custom">
         <div className="text-center max-w-3xl mx-auto mb-8">
           <h2 className="heading-2 text-gray-900 mb-4">
-            Choose the Right Visa for Your Dubai Visit
+            {t(language, "visaTypes.title")}
           </h2>
           <p className="text-lg font-extralight text-gray-600 mb-6">
-            We offer a variety of visa options to suit your travel needs. Select
-            the one that best fits your stay duration and requirements.
+            {t(language, "visaTypes.subtitle")}
           </p>
           <div className="flex justify-center">
             <CurrencySelector currency={currency} setCurrency={setCurrency} />
@@ -82,7 +84,7 @@ function VisaTypes() {
               >
                 {visa.popular && (
                   <div className="absolute top-0 right-0 bg-primary-500 text-white px-4 py-1 text-lg font-medium rounded-bl-md">
-                    Most Popular
+                    {t(language, "visaTypes.mostPopular")}
                   </div>
                 )}
 
@@ -115,7 +117,7 @@ function VisaTypes() {
                         visa.popular ? "btn-primary" : "btn-secondary"
                       }`}
                     >
-                      Apply Now
+                      {t(language, "visaTypes.applyNow")}
                     </Link>
                   </div>
                 </div>

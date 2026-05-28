@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 function Hero() {
+  const { language } = useLanguage();
+
   return (
     <div className="relative bg-gradient-to-r from-primary-600 to-primary-800 text-white">
       <div className="absolute inset-0 bg-black opacity-20"></div>
@@ -10,34 +14,33 @@ function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="heading-1 mb-6">
-              Fast & Reliable Dubai Visit Visa Services
+              {t(language, "hero.title")}
             </h1>
             <p className="text-lg md:text-xl mb-8 text-primary-50">
-              Kilson Services offers hassle-free Dubai visit visa processing for 30 and 60 days. 
-              Get your visa approved quickly with our expert assistance.
+              {t(language, "hero.subtitle")}
             </p>
             
             <div className="space-y-3 mb-8">
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 mr-2 text-gold-300" />
-                <span>Quick processing within 24-72 hours</span>
+                <span>{t(language, "hero.feature1")}</span>
               </div>
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 mr-2 text-gold-300" />
-                <span>Competitive rates with no hidden fees</span>
+                <span>{t(language, "hero.feature2")}</span>
               </div>
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 mr-2 text-gold-300" />
-                <span>Dedicated support throughout the process</span>
+                <span>{t(language, "hero.feature3")}</span>
               </div>
             </div>
             
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <Link to="/apply" className="btn-gold">
-                Apply for Visa Now
+                {t(language, "hero.applyBtn")}
               </Link>
               <Link to="/visa-types" className="btn bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border border-white/30">
-                Explore Visa Types
+                {t(language, "hero.exploreBtn")}
               </Link>
             </div>
           </div>
@@ -51,11 +54,10 @@ function Hero() {
               />
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  Visit Dubai - The City of Dreams
+                  {t(language, "hero.cardTitle")}
                 </h3>
                 <p className="text-gray-600">
-                  Experience the perfect blend of modern architecture, luxury shopping, 
-                  vibrant nightlife, and rich culture in the heart of the UAE.
+                  {t(language, "hero.cardText")}
                 </p>
               </div>
             </div>
