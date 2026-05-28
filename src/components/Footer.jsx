@@ -92,7 +92,7 @@ function Footer() {
               </li>
               <li>
                 <Link
-                  to="/contact"
+                  to="/contact-us"
                   className="text-lg font-extralight text-gray-300 hover:text-white transition-colors"
                 >
                   {t(language, "nav.contactUs")}

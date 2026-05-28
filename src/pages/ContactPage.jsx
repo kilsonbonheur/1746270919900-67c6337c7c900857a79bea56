@@ -1,5 +1,5 @@
 import React from "react";
-import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, MessageCircle, Shield, Globe, Headphones } from "lucide-react";
 import ContactForm from "../components/ContactForm";
 
 function ContactPage() {
@@ -45,11 +45,66 @@ function ContactPage() {
     <div id="contact_page">
       <div className="bg-primary-700 py-16">
         <div className="container-custom">
-          <h1 className="heading-1 text-white mb-4">Contact Us</h1>
-          <p className="text-lg font-extralight text-primary-100 max-w-3xl">
-            Have questions about our visa services? Get in touch with our team
-            for assistance with your Dubai visa application.
+          <h1 className="heading-1 text-white mb-4">Contact Us – Get Your UAE Visit Visa</h1>
+          <p className="text-xl font-extralight text-primary-100 max-w-3xl">
+            Have questions about our visa services? Our experienced team is here to help you
+            navigate the UAE visa application process from start to finish.
           </p>
+        </div>
+      </div>
+
+      <div className="section bg-white">
+        <div className="container-custom">
+          <div className="max-w-4xl mx-auto mb-12">
+            <h2 className="text-2xl font-medium text-gray-800 mb-6">
+              Why Reach Out to Our UAE Visa Experts?
+            </h2>
+            <p className="text-lg font-extralight text-gray-600 mb-5">
+              Whether you are planning a short holiday, a business trip, or visiting family in Dubai,
+              Abu Dhabi, Sharjah, or any other emirate, our visa specialists can guide you through every
+              step. We handle all types of UAE visit visas including 30-day single entry, 60-day tourist
+              visas, and 60-day multiple entry permits. Our team reviews your documents in advance to
+              ensure your application has the best possible chance of approval.
+            </p>
+            <p className="text-lg font-extralight text-gray-600 mb-5">
+              We understand that applying for a visa can feel overwhelming, especially if it is your first
+              time travelling to the United Arab Emirates. That is why our multilingual support team is
+              available by phone, email, and WhatsApp to answer your questions, clarify documentation
+              requirements, and provide real-time updates on your application status. We pride ourselves
+              on transparent pricing with no hidden fees, and our processing times typically range from
+              24 to 72 hours.
+            </p>
+            <p className="text-lg font-extralight text-gray-600">
+              Do not hesitate to get in touch before you apply. A quick conversation with our team can
+              save you time, avoid common mistakes, and give you confidence that your visa will be
+              processed smoothly. Use any of the contact methods below, or fill out the form and we
+              will respond within a few hours during business days.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="bg-primary-50 rounded-md p-6 text-center">
+              <Headphones className="h-10 w-10 text-primary-600 mx-auto mb-3" />
+              <h3 className="text-lg font-medium text-gray-800 mb-2">Dedicated Support</h3>
+              <p className="text-lg font-extralight text-gray-600">
+                Our team responds to every inquiry within hours, not days. Expect fast, personal assistance.
+              </p>
+            </div>
+            <div className="bg-primary-50 rounded-md p-6 text-center">
+              <Globe className="h-10 w-10 text-primary-600 mx-auto mb-3" />
+              <h3 className="text-lg font-medium text-gray-800 mb-2">All Emirates Covered</h3>
+              <p className="text-lg font-extralight text-gray-600">
+                We process visas for Dubai, Abu Dhabi, Sharjah, Ajman, Fujairah, Ras Al Khaimah, and Umm Al Quwain.
+              </p>
+            </div>
+            <div className="bg-primary-50 rounded-md p-6 text-center">
+              <Shield className="h-10 w-10 text-primary-600 mx-auto mb-3" />
+              <h3 className="text-lg font-medium text-gray-800 mb-2">Secure and Trusted</h3>
+              <p className="text-lg font-extralight text-gray-600">
+                Your personal information is handled with strict confidentiality and secure processing systems.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -57,7 +112,7 @@ function ContactPage() {
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-1">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
+              <h2 className="text-2xl font-medium text-gray-800 mb-6">
                 Get In Touch
               </h2>
 
@@ -178,7 +233,7 @@ function ContactPage() {
           style={{ border: 0 }}
           allowFullScreen=""
           loading="lazy"
-          title="Kilson Visa Services Location"
+          title="Visa in UAE Office Location - Al Rigga, Deira, Dubai"
         ></iframe>
       </div>
     </div>

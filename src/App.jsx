@@ -26,7 +26,9 @@ function App() {
           <Route path="apply" element={<ApplicationPage />} />
           <Route path="requirements" element={<RequirementsPage />} />
           <Route path="contact" element={<ContactPage />} />
+          <Route path="contact-us" element={<ContactPage />} />
           <Route path="track" element={<TrackApplicationPage />} />
+          <Route path="track-application" element={<TrackApplicationPage />} />
           <Route path="terms" element={<TermsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
